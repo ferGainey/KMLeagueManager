@@ -10,32 +10,34 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
+
 
 import com.example.fernando.kmleaguemanager.R;
-import com.example.fernando.kmleaguemanager.presenter.LoginPresenter;
-import com.example.fernando.kmleaguemanager.view.activity.HomeActivity;
+import com.example.fernando.kmleaguemanager.presenter.HomePresenter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class LoginFragment extends Fragment implements LoginPresenter.View {
+public class HomeFragment extends Fragment implements HomePresenter.View {
 
-    @BindView(R.id.buttonLogin)
-    Button btn_login;
+    @BindView(R.id.buttonPlayers)
+    Button btn_players;
 
-    @BindView(R.id.editTextUserName)
-    EditText user_name;
+    @BindView(R.id.buttonFinances)
+    Button btn_finances;
 
-    @BindView(R.id.editTextPassword)
-    EditText password;
+    @BindView(R.id.buttonTransfers)
+    Button btn_transfers;
 
+    private HomePresenter homePresenter;
 
-    public LoginFragment(){ setHasOptionsMenu(true);}
+    public HomeFragment(){ setHasOptionsMenu(true);}
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.homePresenter = new HomePresenter();
+        homePresenter.setView(this);
     }
 
     @Override
@@ -47,7 +49,7 @@ public class LoginFragment extends Fragment implements LoginPresenter.View {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_login, container, false);
+        return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
     @Override
@@ -55,7 +57,9 @@ public class LoginFragment extends Fragment implements LoginPresenter.View {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
 
-        btn_login.setOnClickListener(v -> this.verifyUserPassword());
+        btn_players.setOnClickListener(v -> this.onPlayersButtonClick());
+        btn_finances.setOnClickListener(v -> this.onFinancesButtonClick());
+        btn_transfers.setOnClickListener(v -> this.onTransfersButtonClick());
 
     }
 
@@ -65,13 +69,18 @@ public class LoginFragment extends Fragment implements LoginPresenter.View {
     }
 
     @Override
-    public void verifyUserPassword(){
-        //TODO replace with the sql query
-        if (1 == 1){
-            Log.i("USER", this.user_name.getText().toString());
-            Intent intent = new Intent(getActivity(), HomeActivity.class);
-            startActivity(intent);
-        }
+    public void onPlayersButtonClick(){
+        Log.i("USER", "Players");
+    }
 
+    @Override
+    public void onFinancesButtonClick(){
+        Log.i("USER", "Finances");
+    }
+
+    @Override
+    public void onTransfersButtonClick(){
+        Log.i("USER", "Transfers");
     }
 }
+
